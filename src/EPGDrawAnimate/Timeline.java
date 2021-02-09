@@ -16,7 +16,7 @@ public class Timeline extends JPanel {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g.create();
 
-        g2D.setColor(Color.DARK_GRAY);
+        g2D.setColor(Color.BLACK);
         g2D.fillRoundRect(0, 0, Constants.WINDOW_WIDTH, Constants.TIMELINE_HEIGHT, 10, 10);
     }
 

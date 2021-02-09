@@ -7,8 +7,8 @@ import java.awt.Graphics2D;
 public final class Constants {
 
     //Window dimensions
-    public static final int WINDOW_WIDTH = 1280;
-    public static final int WINDOW_HEIGHT = 850;
+    public static final int WINDOW_WIDTH = 800;
+    public static final int WINDOW_HEIGHT = 600;
     public static final int WINDOW_WIDTH_HALF = WINDOW_WIDTH / 2;
     public static final int WINDOW_HEIGHT_HALF = WINDOW_HEIGHT / 2;
 
@@ -20,10 +20,19 @@ public final class Constants {
     //Toolbar
     public static final int TOOLBAR_WIDTH = 150;
     public static final int TOOLBAR_HEIGHT = WINDOW_HEIGHT - TIMELINE_HEIGHT;
-    
-     //DrawingBoard
-    public static final int DRAWING_BOARD_WIDTH = WINDOW_WIDTH - TOOLBAR_WIDTH;
+
+    //DrawingBoard
+    public static final int DRAWING_BOARD_WIDTH = WINDOW_WIDTH;
     public static final int DRAWING_BOARD_HEIGHT = WINDOW_HEIGHT - TIMELINE_HEIGHT;
+
+    //tOOLS TYPES
+    public static final String SHAPE_RECTANGLE = "SHAPE_RECTANGLE";
+    public static final String SHAPE_CIRCLE = "SHAPE_CIRCLE";
+    public static final String SHAPE_SQUARE = "SHAPE_SQUARE";
+    public static final String PENCIL = "PENCIL";
+    public static final String ERASER = "ERASER";
+
+
 
     /*
       get the halves size of a passed size
