@@ -1,12 +1,17 @@
 package EPGDrawAnimate;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -15,132 +20,91 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author EdsonPaulo
  */
 public class Workspace extends JFrame implements ActionListener {
-
+    
     private DrawingBoard drawingBoard;
-    private JPanel timeLine;
-
+    private Timeline timeLine;
+    
+    private JToolBar toolsBar;
     private JMenuBar menuBar;
     private JMenu menu;
-    private JMenu help;
     private JMenu tools;
-
-    private JMenu pencilMenu;
-    private JMenu shapeMenu;
-    private JMenu eraserMenu;
-
-    private JMenuItem pencil;
-    private JMenuItem circle;
-    private JMenuItem rectangle;
+    private JMenuItem help;
+    private JMenuItem info;
     private JMenuItem exit;
-
-    private JMenuItem eraser;
-
+    
     public Workspace() throws Exception {
         super("EPG - Draw & Animate");
-        //configTheme();
+        configTheme();
         initComponents();
         addComponents();
-
+        
         setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         setResizable(false);
         setJMenuBar(menuBar);
-        setLayout(null);
+        // setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
-
+    
     private void initComponents() throws Exception {
-        /**
-         * Drawing Board
-         */
         drawingBoard = new DrawingBoard();
-        drawingBoard.setBounds(0, 0, Constants.DRAWING_BOARD_WIDTH, Constants.DRAWING_BOARD_HEIGHT);
-
+        drawingBoard.setSize(Constants.DRAWING_BOARD_WIDTH - 300, Constants.DRAWING_BOARD_HEIGHT);
+        
+        timeLine = new Timeline();
+        timeLine.setLayout(new GridLayout(4, 60));
+        timeLine.setBackground(Color.gray);
+        timeLine.setBounds(0, Constants.WINDOW_HEIGHT - 30,Constants.TIMELINE_WIDTH, Constants.TIMELINE_HEIGHT);
+        
+        toolsBar = (new ToolsPanel(drawingBoard)).getToolBar();
+        
         menuBar = new JMenuBar();
-        // file menu
         menu = new JMenu("Ficheiro");
-        exit = new JMenuItem("Sair");
+        exit = new JMenuItem("Sair", new ImageIcon(this.getClass().getResource("icons/exit.png")));
         exit.addActionListener(this);
-
-        pencilMenu = new JMenu("Desenho Livre");
-        pencil = new JMenuItem("Pincel");
-        pencil.addActionListener(this);
-
-        // shape menu
-        shapeMenu = new JMenu("Formas Geométricas");
-        circle = new JMenuItem("Círculo");
-        circle.addActionListener(this);
-        rectangle = new JMenuItem("Rectângulo");
-        rectangle.addActionListener(this);
-
-        //eraser menu 
-        eraserMenu = new JMenu("Borracha");
-        eraser = new JMenuItem("Borracha");
-        eraser.addActionListener(this);
-
+        help = new JMenuItem("Ajuda", new ImageIcon(this.getClass().getResource("icons/help.png")));
+        help.addActionListener(this);
+        info = new JMenuItem("Sobre", new ImageIcon(this.getClass().getResource("icons/info.png")));
+        info.addActionListener(this);
         tools = new JMenu("Ferramentas");
         tools.addActionListener(this);
-
-        help = new JMenu("Ajuda");
-        help.addActionListener(this);
-
     }
-
+    
     private void addComponents() {
-        // file menu
+        menu.add(help);
+        menu.add(info);
         menu.add(exit);
         menuBar.add(menu);
-
-        // pencil menu
-        pencilMenu.add(pencil);
-        menuBar.add(pencilMenu);
-
-        // shape menu
-        shapeMenu.add(circle);
-        shapeMenu.add(rectangle);
-        menuBar.add(shapeMenu);
-
-        //eraser menu 
-        eraserMenu.add(eraser);
-        menuBar.add(eraserMenu);
-
         menuBar.add(tools);
-        menuBar.add(help);
-
+        
+        
         this.add(menuBar);
-        this.add(drawingBoard);
+        this.add(toolsBar, BorderLayout.NORTH);
+        this.add(drawingBoard, BorderLayout.CENTER);
+        this.add(timeLine, BorderLayout.SOUTH);
+        
         this.addMouseListener(drawingBoard);
         this.addMouseMotionListener(drawingBoard);
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == pencil) {
-            drawingBoard.currentTool = Constants.PENCIL;
-        } else if (e.getSource() == circle) {
-            drawingBoard.currentTool = Constants.SHAPE_CIRCLE;
-        } else if (e.getSource() == rectangle) {
-            drawingBoard.currentTool = Constants.SHAPE_RECTANGLE;
-        } else if (e.getSource() == eraser) {
-            drawingBoard.currentTool = Constants.ERASER;
-
-        } else if (e.getSource() == tools) {
+        if (e.getSource() == tools) {
             System.out.print("CLICOU TOOLS");
         } else if (e.getSource() == help) {
             System.out.print("CLICOU HELP");
         }
     }
-
+    
     private void configTheme() {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            System.out.println("ERRO: Falha ao carregar tema do sistema!");
         }
     }
-
+    
     public static void main(String[] args) throws Exception {
         new Workspace();
     }
-
 }

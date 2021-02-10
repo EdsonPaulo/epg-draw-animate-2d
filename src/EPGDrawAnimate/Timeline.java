@@ -10,6 +10,7 @@ import javax.swing.JPanel;
  * @author EdsonPaulo
  */
 public class Timeline extends JPanel {
+    
 
     @Override
     public void paintComponent(Graphics g) {

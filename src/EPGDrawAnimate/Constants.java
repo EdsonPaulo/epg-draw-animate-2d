@@ -7,51 +7,33 @@ import java.awt.Graphics2D;
 public final class Constants {
 
     //Window dimensions
-    public static final int WINDOW_WIDTH = 800;
-    public static final int WINDOW_HEIGHT = 600;
-    public static final int WINDOW_WIDTH_HALF = WINDOW_WIDTH / 2;
-    public static final int WINDOW_HEIGHT_HALF = WINDOW_HEIGHT / 2;
+    public static final int WINDOW_WIDTH = 1200;
+    public static final int WINDOW_HEIGHT = 820;
 
     //Elements default dimensions
     //Timeline
     public static final int TIMELINE_WIDTH = WINDOW_WIDTH;
     public static final int TIMELINE_HEIGHT = 100;
 
-    //Toolbar
-    public static final int TOOLBAR_WIDTH = 150;
-    public static final int TOOLBAR_HEIGHT = WINDOW_HEIGHT - TIMELINE_HEIGHT;
-
     //DrawingBoard
     public static final int DRAWING_BOARD_WIDTH = WINDOW_WIDTH;
     public static final int DRAWING_BOARD_HEIGHT = WINDOW_HEIGHT - TIMELINE_HEIGHT;
 
-    //tOOLS TYPES
-    public static final String SHAPE_RECTANGLE = "SHAPE_RECTANGLE";
-    public static final String SHAPE_CIRCLE = "SHAPE_CIRCLE";
-    public static final String SHAPE_SQUARE = "SHAPE_SQUARE";
-    public static final String PENCIL = "PENCIL";
-    public static final String ERASER = "ERASER";
+    //Tools Types
+    public static final String TOOL_TEXT = "TOOL_TEXT";
+    public static final String TOOL_FILL = "TOOL_FILL";
+    public static final String TOOL_PENCIL = "TOOL_PENCIL";
+    public static final String TOOL_ERASER = "TOOL_ERASER";
+    public static final String TOOL_LINE = "TOOL_LINE";
+    
+    public static final String TOOL_CIRCLE = "TOOL_CIRCLE";
+    public static final String TOOL_FILL_CIRCLE = "TOOL_FILL_CIRCLE";
 
+    public static final String TOOL_RECTANGLE = "TOOL_RECTANGLE";
+    public static final String TOOL_FILL_RECTANGLE = "TOOL_FILL_RECTANGLE";
 
-
-    /*
-      get the halves size of a passed size
-     */
-    public static int getHalves(int fullSizeObject) {
-        return (fullSizeObject / 2);
-    }
-
-    public static float getHalves(float fullSizeObject) {
-        return (fullSizeObject / 2);
-    }
-
-    public static int getHalves(int fullSizeObject, int halves) {
-        return (fullSizeObject / halves);
-    }
-
-    public static float getHalves(float fullSizeObject, int halves) {
-        return (fullSizeObject / halves);
-    }
+    public static final String TOOL_ROUND_RECTANGLE = "TOOL_ROUND_RECTANGLE";
+    public static final String TOOL_FILL_ROUND_RECTANGLE = "TOOL_FILL_ROUND_RECTANGLE";
 
     /*
      * Draw a String centered in the middle of a Rectangle.
