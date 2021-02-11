@@ -68,7 +68,7 @@ public class DrawingBoard extends JPanel implements Runnable, MouseListener, Mou
         drawBoardWidth = dimension.width - 150;
         drawBoardHeight = dimension.height - 160;
 
-        setSize(drawBoardWidth - 3, drawBoardHeight - 3); //the 3 accounts for the sp scroller
+        setSize(drawBoardWidth - 3, drawBoardHeight - 3);
         setPreferredSize(new Dimension(drawBoardWidth - 3, drawBoardHeight - 3));
         setLayout(null);
         setDoubleBuffered(true);
@@ -90,12 +90,6 @@ public class DrawingBoard extends JPanel implements Runnable, MouseListener, Mou
 
         stroke = new BasicStroke((float) 2);
 
-        // td = new TextDialog(frame);
-        //if the mouse is pressed it sets the oldX & oldY
-        //coordinates as the mouses x & y coordinates
-        //while the mouse is dragged it sets currentX & currentY as the mouses x and y
-        //then it draws a line at the coordinates
-        //it repaints it and sets oldX and oldY as currentX and currentY
         Thread mainThread = new Thread(this);
         mainThread.start();
     }
@@ -122,6 +116,7 @@ public class DrawingBoard extends JPanel implements Runnable, MouseListener, Mou
         shapesOnBoard.removeAllElements();
         removedShapes.removeAllElements();
         repaint();
+        canvas.setRGB(255, 255, 255);
         g2D.setColor(primaryColor);
     }
 
@@ -142,7 +137,7 @@ public class DrawingBoard extends JPanel implements Runnable, MouseListener, Mou
 
         if (g2D != null) {
             layerStates.add(g2D);
-            System.out.println("Salvou layer");
+            // System.out.println("Salvou layer");
         }
 
         //ACTIVATE ANTIALISING

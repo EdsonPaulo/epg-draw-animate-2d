@@ -1,38 +1,39 @@
 package EPGDrawAnimate;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JToolBar;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author EdsonPaulo
  */
-public class ToolsPanel implements ActionListener {
+public class ToolsPanel implements ActionListener, ChangeListener {
 
     private final DrawingBoard drawBoard;
-    private  Pallete pallete;
-    private JComboBox cbxLineHeight;
+    private Pallete pallete;
 
     private JToolBar toolBar;
     private JPanel optionsPanel, drawToolsPanel, lineHeightPanel;
     private JButton btnPencil, btnFill, btnLine, btnText, btnEraser;
     private JButton btnFillRectangle, btnFillRoundRectangle, btnFillCircle;
     private JButton btnRectangle, btnRoundRectangle, btnCircle;
+    private JSpinner spnLineHeight;
+    SpinnerModel lineHeightModel = new SpinnerNumberModel(2, 2, 78, 4);
 
     private JButton btnClear, btnUndo, btnRedo;
-
-    String[] lineHeightItems = {"Tamanho da Linha", "2", "4", "6", "8", "10", "12", "14", "16"};
 
     public ToolsPanel(DrawingBoard drawBoard) {
         this.drawBoard = drawBoard;
@@ -57,7 +58,7 @@ public class ToolsPanel implements ActionListener {
         btnUndo.addActionListener(this);
         btnRedo.addActionListener(this);
 
-        cbxLineHeight.addActionListener(this);
+        spnLineHeight.addChangeListener(this);
     }
 
     private void initComponents() {
@@ -65,7 +66,7 @@ public class ToolsPanel implements ActionListener {
         toolBar.setFloatable(false);
         toolBar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         toolBar.setLayout(new GridLayout(1, 3));
-        
+
         pallete = new Pallete(drawBoard);
 
         btnPencil = new JButton("", new ImageIcon(this.getClass().getResource("icons/pencil.png")));
@@ -80,14 +81,12 @@ public class ToolsPanel implements ActionListener {
         btnCircle = new JButton("", new ImageIcon(this.getClass().getResource("icons/circle.png")));
         btnFillCircle = new JButton("", new ImageIcon(this.getClass().getResource("icons/circle-fill.png")));
 
-        btnRoundRectangle = new JButton("", new ImageIcon(this.getClass().getResource("icons/round-rectangle.png")));
+        btnRoundRectangle = new JButton("", new ImageIcon(this.getClass().getResource("icons/rectangle.png")));
         btnFillRoundRectangle = new JButton("", new ImageIcon(this.getClass().getResource("icons/round-rectangle.png")));
 
         btnClear = new JButton("", new ImageIcon(this.getClass().getResource("icons/clear.png")));
         btnUndo = new JButton("", new ImageIcon(this.getClass().getResource("icons/undo.png")));
         btnRedo = new JButton("", new ImageIcon(this.getClass().getResource("icons/redo.png")));
-
-        cbxLineHeight = new JComboBox(lineHeightItems);
 
         optionsPanel = new JPanel(new GridLayout(1, 3));
         optionsPanel.add(btnUndo);
@@ -108,14 +107,16 @@ public class ToolsPanel implements ActionListener {
         drawToolsPanel.add(btnFillCircle);
         drawToolsPanel.add(btnFillRoundRectangle);
 
-        lineHeightPanel = new JPanel(new FlowLayout());
+        lineHeightPanel = new JPanel();
+        spnLineHeight = new JSpinner(lineHeightModel);
+
         lineHeightPanel.add(new JLabel("", new ImageIcon(this.getClass().getResource("icons/line-height.png")), 0));
-        lineHeightPanel.add(cbxLineHeight);
+        lineHeightPanel.add(spnLineHeight);
 
         toolBar.add(optionsPanel);
         toolBar.addSeparator();
         toolBar.add(drawToolsPanel);
-        toolBar.addSeparator();
+        toolBar.add(lineHeightPanel);
         toolBar.add(pallete);
     }
 
@@ -142,20 +143,20 @@ public class ToolsPanel implements ActionListener {
             drawBoard.setCurrentTool(Constants.TOOL_ERASER);
         } else if (btnPressed == btnFill) {
             drawBoard.setCurrentTool(Constants.TOOL_FILL);
-        } else if (btnPressed == cbxLineHeight) {
-            try {
-                JComboBox combo = (JComboBox) e.getSource();
-                int selectedValue = Integer.valueOf((String) combo.getSelectedItem());
-                drawBoard.setStrokeSize(selectedValue);
-            } catch (NumberFormatException ex) {
-
-            }
         } else if (btnPressed == btnUndo) {
             drawBoard.undo();
         } else if (btnPressed == btnRedo) {
             drawBoard.redo();
         } else if (btnPressed == btnClear) {
             drawBoard.clear();
+        }
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        if (e.getSource() == spnLineHeight) {
+            String selectedValue = ((JSpinner) e.getSource()).getValue().toString();
+            drawBoard.setStrokeSize(Integer.valueOf(selectedValue));
         }
     }
 
